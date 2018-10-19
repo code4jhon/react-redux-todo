@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Redux from 'redux';
+
+import Todos from './Todos';
+import Goals from './Goals';
 
 class App extends Component {
+  componentDidMount () {
+    const { store } = this.props
+
+    store.subscribe(() => this.forceUpdate())
+  }
   render() {
+    const { store } = this.props
+    const { todos, goals } = store.getState()
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Todos todos={todos} store={this.props.store} />
+        <Goals goals={goals} store={this.props.store} />
       </div>
-    );
+    )
   }
 }
 
